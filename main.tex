@@ -1,4 +1,13 @@
-%--------------------------------------------------------------------------------------
+%-----------------------------------------------------------------------------------------------------------
+% Everything before \begin{document} and
+% \end{document} is called Preamble. The Preamble
+% sets up your document. The preamble typically specifies
+%   the document class
+%   languages
+%   imports packages by using \usepackage{package_name} command
+%-----------------------------------------------------------------------------------------------------------
+
+%-----------------------------------------------------------------------------------------------------------
 % \documentclass have to be the first command of each latex file and 
 % defines layout and class of the document.
 %   [options]: contains options to define the layout of the document (fontsize, paper, columns ...) 
@@ -12,10 +21,18 @@
 %   Sources: 
 %       https://texblog.org/2013/02/13/latex-documentclass-options-illustrated/ (for options)
 %       https://en.wikibooks.org/wiki/LaTeX/Document_Structure#Document_classes (for classes)
-%--------------------------------------------------------------------------------------
+%-----------------------------------------------------------------------------------------------------------
 \documentclass[a4paper,11pt,onecolumn]{report}
 
-\begin{document}
-    Hello Latex!
+%-----------------------------------------------------------------------------------------------------------
+% The \usepackage{package_name} commands imports external packages (here: graphicx)
+% to provide latex with external features.
+%-----------------------------------------------------------------------------------------------------------
+\usepackage{graphicx}                               % graphicx package enables to import external graphic files
 
+%-----------------------------------------------------------------------------------------------------------
+% The content of a document have to be added between the \begin{document} and \end{document}
+%-----------------------------------------------------------------------------------------------------------
+\begin{document}
+    Hello Latex!. This is an example sentence written by me.
 \end{document}
