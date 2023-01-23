@@ -8,6 +8,12 @@
 %-----------------------------------------------------------------------------------------------------------
 
 %-----------------------------------------------------------------------------------------------------------
+% Note: A latex command consist of a backslash, command name, argument (with {}) #
+% and optional arguments (with []), e.g.
+% \command_name[optonal_argument1, optional_argument2 ..]{arugment}
+%-----------------------------------------------------------------------------------------------------------
+
+%-----------------------------------------------------------------------------------------------------------
 % \documentclass have to be the first command of each latex file and 
 % defines layout and class of the document.
 %   [options]: contains options to define the layout of the document (fontsize, paper, columns ...) 
@@ -28,11 +34,42 @@
 % The \usepackage{package_name} commands imports external packages (here: graphicx)
 % to provide latex with external features.
 %-----------------------------------------------------------------------------------------------------------
-\usepackage{graphicx}                               % graphicx package enables to import external graphic files
+% graphicx package enables to import external graphic files
+\usepackage{graphicx}
+
+%-----------------------------------------------------------------------------------------------------------
+% For adding a title, author and date, latex need to include first the following three commands
+% in preamble. In a second you have to include the \maketitle command between \begin{docuemtn} and
+% \end{document}
+%-----------------------------------------------------------------------------------------------------------
+% adds a title
+\title{Soccer is great \& Politics sucks!}   
+% adds a author with footnote to thank, e.g. your institution or coworker
+\author{Sefa Kutlu!\thanks{Thanks to Albert Einstein whose shared his great knowledge with us. }}
+% adds a date (\today for todays date or a apsicifc date, e.g. \date{August 2022})
+\date{\today}                           
 
 %-----------------------------------------------------------------------------------------------------------
 % The content of a document have to be added between the \begin{document} and \end{document}
 %-----------------------------------------------------------------------------------------------------------
 \begin{document}
+    % \maketitle commands adds the information defined above with title, author date commands to the document
+    \maketitle
     Hello Latex!. This is an example sentence written by me.
+    % \\ new line command
+    \\
+    % bold, italic, underline commands
+    % \textbf{word}: The word in braces will displayed bold
+    The last word should be \textbf{bold}.      
+    \\
+    % \textit{word}: The word in braces will displayed italic
+    The last word should be \textit{italic}.
+    \\
+    % \underline{word}: The word will be underlined
+    The last word should be \underline{underlined}.
+    \\
+    % combine of the three commands from above
+    The last three words should be \textbf{\textit{\underline{bold italic underlined}}}.
+
+
 \end{document}
