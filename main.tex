@@ -59,9 +59,10 @@
 %-----------------------------------------------------------------------------------------------------------
 \begin{document}
     % \maketitle commands adds the information defined above with title, author date commands to the document
+    % have to be the first command within \begin{document} and \end{document}
     \maketitle
     Hello Latex!. This is an example sentence written by me.
-    % \\ new line command
+    % \\ new line without new paragraph command
     \\
     % bold, italic, underline commands
     % \textbf{word}: The word in braces will displayed bold
@@ -125,6 +126,146 @@
     % \ref{figure} command is substituted by the number corresponding to the referenced figure 
     % \pageref{figure} command is substituted by the page number on which the figure is displayed.  
     The Figure \ref{fig:besiktas_team} is on page \pageref{fig:besiktas_team}.
+
+    \clearpage
+
+    %----------------------
+    %   Lists
+    %----------------------
+    % An unordered list is created with the enviroment \begin{itemize} ... \end{itemize}
+    % and items are defined inside them with: \item example item 
+    % for example:
+    \begin{itemize}
+        \item an item
+        \item another item
+        \item useless item
+    \end{itemize}
+    
+    % An ordered list is created with the enviroment \begin{enumerate} ... \end{enumerate}
+    % and items are defined inside them with: \item example item 
+    % for example:
+    \begin{enumerate}
+        \item first item
+        \item second item
+        \item third item
+    \end{enumerate}
+
+    %----------------------
+    %   Math
+    %----------------------
+    % A Huge advantage of Latex is the ease of writing mathematical expressions.
+    % There are two modes to write mathematical expression:
+    % 1. inline math mode: used to write formulas that are part of a paragraph
+    % 2. display math mode: used to write formulas that are not part of text or paragraphs
+    % and are set on separate lines.
+
+    % Inline math mode
+    % To typeset inline math mode u can use one of the these delimiter pairs:
+    % \(...\)
+    % $...$
+    % \begin{math}...\end{math}
+    The following commands demonstrate how you can typeset inline-mode math.\\
+    % \textbackslash command creates a \ within text, it can't be used as \ in a text, since 
+    % it is a special character reserved for latex commands.
+    % Special characters reserved by latex can be used in text with \ before the character
+    % e.g. \{ = { (in text), \] = ] (in text).
+    With \textbackslash begin\{math\} \dots \textbackslash end\{math\}.
+    \begin{math}
+        E=mc^2
+    \end{math}
+    \\
+    With \$\dots\$
+    $E=mc^2$
+    \\
+    With \textbackslash (\dots\textbackslash)
+    \(E=mc^2\)
+
+    % Display math mode
+    % To typeset display-mode math u can one of these delimiter pairs:
+    % \[...\]
+    % \begin{displaymath} ... \end{displaymath}
+    % \begin{equation} ... \end{equation}
+    The following commands demonstrate how you can typeset display-mode math
+    Here comes some text. Let's see if the formulas 
+    \[E=mc^2\]
+    \begin{displaymath}
+        E=mc^2
+    \end{displaymath}
+    \begin{equation}
+        E=mc^2
+    \end{equation}
+    will appear in this paragraph
+    or in a new line.
+
+    % More Complex Math
+    % _ for subscripts
+    % ^ for Superscripts
+    Subscripts (dt. index) in math mode are written as $a_b$ (\$a\_b\$). \\
+    Superscripts (dt. exponent) in math mode are written as $a^b$ (\$a\^{}b\$). \\
+
+    % Example for complex math formulas
+    % \dots command displays ...
+    % Hint: Group subscripts & Superscripts with multiple variables or numbers
+    % inside {...}
+    \[T^{i_1i_2 \dots i_p}_{j_1,j_2 \dots j_q} = 
+    T(x^{i_1},\dots,x^{i_p},e_{j_1},\dots,e_{j_q})\]
+
+    % Integrals are written with the \int command.
+    % Append \int ^<char>_
+    Integrals are written by using \textbackslash int command. You can
+    append, e.g. \^{}5\_1 to define 5 as upper and 1 as 
+    lower boundary. Also, possible to append it in the revert order like 
+    \_{}1\^{}5. Both will produce the same output. 
+    \[\int^5_1\]
+    \[\int_1^5\]
+
+
+    Fractions are written by using \textbackslash frac\{Numerator\}\{Denominator\}, e.g.
+    \begin{displaymath}
+        \frac{Numerator}{Denominator}
+    \end{displaymath}
+
+    The following formula describes using the \textbackslash int and
+    \textbackslash frac \{Numerator\}\{Denominator\}
+    \begin{equation}
+        \int^1_0 \frac{dx}{e^x} = \frac{e-1}{e}    
+    \end{equation}
+
+    % Example for lower- and uppercase greek letters
+    % lowercase leters
+    \clearpage
+    Example for lowercase Greek letters.
+    \begin{itemize}
+        \item $\omega$
+        \item $\delta$
+        \item $\gamma$
+        \item ...
+    \end{itemize}
+
+    Example for uppercase Greek letters
+    \begin{itemize}
+        \item $\Omega$
+        \item $\Delta$
+        \item $\Gamma$
+        \item ...
+    \end{itemize}
+    Greek letters have their own commands (e.g.\textbackslash omega for $\omega$). To produce lowercase Greek
+    letters you have to write the corresponding command of the letter in 
+    lowercase. For the uppercase Greek letters you have write the first
+    letter of the command in uppercase.\\
+
+    % Example for sin, cos and log
+    Example for sin, cos and log, Attention: NEVER FORGET TO PUT MATH FORMULAS
+    BETWEEN MATH MODE COMMANDS!!!.
+    \begin{itemize}
+        \item $\sin(\beta)$, latex command:  \$\textbackslash sin(\textbackslash beta)\$ 
+        \item $\cos(\alpha)$, latex command:  \$\textbackslash cos(\textbackslash alpha)\$ 
+        \item $\log(x)$, latex command:  \$\textbackslash log(x)\$ 
+    \end{itemize}
+
+    % Math square root 
+    Example for square root. The command: \textbackslash sqrt\{expression\}
+    \[\sqrt{x^2+1}\]
 
 \end{document}
 
