@@ -40,6 +40,8 @@
 \usepackage{graphicx}
 \graphicspath{{images}}
 
+\usepackage{array} % to use
+
 
 
 %-----------------------------------------------------------------------------------------------------------
@@ -267,14 +269,123 @@
     Example for square root. The command: \textbackslash sqrt\{expression\}
     \[\sqrt{x^2+1}\]
 
+    % scientifc articles uses abstracts a brief overview of their core
+    % topics or arguments, in latex you can write abstracts between 
+    % \begin{abstract} ... \end{abstract}
+    \begin{abstract}
+        Here is your first abstract without a sense.
+    \end{abstract}
+
+    % Paragraph 
+    % press enter twice to create a new paragraph
+    Hello new paragraph! 
+    
+    Hello second new paragraph!
+
+    % New lines without new paragraph are created with
+    % \\ or \newline command
+    % \verb|<command>| command to display latex commands in text/pdf.
+    This is a sentence to demonstrate the effect of the \verb|\\.|\\
+    This sentence should be on a new line. Bingo it does!
+    Also, it is possible to create a new line with \verb|\newline|\newline
+    command. Great!, now we know how to create new paragraphs and new lines.
+
+    % chapter, section and subsection
+    % \chapter command creates a chapter, only available in book and report
+    \chapter{First Chapter} 
+    % \section command creates a section
+    \section{Introduction}
+    This is the Introduction.
+    \section{Second Section}
+    This is the second Section.
+    % \subsection command creates a subsection
+    \subsection{First subsection}
+    This is the first subsection of the second section.
+    % \section* creates an unnumbered section
+    \section*{Unnumbered section}
+    This is an example for an unnumbered section
+    % Note: The commands with (*) asterisk disable the automatic numbering
+
+    % Also possible a parts, paragraphs and subparagraphs
+    \part{A new part} % only in book and report
+    \paragraph{A new Paragraph}
+    This is an example paragraph with some text. The text here has no meaning 
+    and serves as placeholder.
+    \subparagraph{A new subparagraph}
+    This is a subparagraph
+    
+    %----------------------------
+    %   Tables
+    %----------------------------
+    \section{Table}
+    Section for tables in latex
+    \newline
+    \newline
+    This is a simple table with content centered in the middle and 
+    no borders
+    % Embedd the table in a table enviornment to make it available for
+    % list of tables, give it a caption an label!
+    \begin{table}[h]    % h = table are placed (exactly) here 
+        % center environment to center the table, alternatively use \centering
+        \begin{center}
+            % \begin{tabular}[pos]{cols} ... \end{tabular} creates a table
+            % with the arguments specified in pos and cols.
+            % the following table have { c c c } as argument means that 
+            % we want a table with tree columns and the content of each column
+            % have to be centered
+            % instead of c u can also use 
+            % r (right-justified content)
+            % l (left-justified content)
+            \begin{tabular}{ c c c }
+                % each columns are separated by &
+                % \\ indicates a new row
+                cell1 & cell2 & cell3 \\    
+                % last row doesn't need \\, if nothing follows
+                cell4 & cell5 & cell6 \\    
+                cell7 & cell8 & cell9       
+            \end{tabular}
+            % caption for table
+            \caption{Simple table with no borders and content centered}
+            % label to reference the table within the document
+            \label{table:simple_table}
+        \end{center}
+    \end{table}
+
+    % A advanced table
+    \begin{table}[h]
+        \centering  % centers the table
+        % the | char creates a border, while || creates a double border
+        % m{<width>} creates a column with specified width and 
+        % aligns the text in middle, also possible: (requires: \usepackage{array})
+        % p{<width>} creates column with specified width and aligns text at top
+        % b{<width>} creates column with specified width and aligns text at bottom 
+        % (requires: \usepackage{array} 
+        \begin{tabular}{|| l | c | r | m{4.2em} ||}
+            \hline  % draw a horizontal line with \hline command to create a 
+            % border for the top 
+            cell left & cell centered & cell right & paragraph cell with 3.5em width and the content is aligned to the middle \\
+            % cline draws partial line between the specified columns
+            % Note: left border starts by 1.
+            \cline{3-4}
+            cell2 left & cell2 centered & cell2 right & paragraph cell2 \\
+            % double \hline commands create a gap within the table
+            % useful for, e.g. separating table title from table content.
+            \hline
+            \hline
+            cell3 left & cell3 centered & cell3 right & paragraph cell3 \\
+            \hline 
+        \end{tabular}
+        \caption{Table with borders left, right aligned and centered content}
+        \label{table:intermediate_table}
+    \end{table}
 \end{document}
 
 
 %-----------------------------------------------------------------------------------------------------------
 % Sources:
 %           https://www.overleaf.com/learn/latex/Learn_LaTeX_in_30_minutes#The_preamble_of_a_document
-%           
-%           
+%           https://en.wikibooks.org/wiki/LaTeX/Tables
+%           https://www.overleaf.com/learn/latex/Tables
 %           
 %           
 %           
