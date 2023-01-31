@@ -30,6 +30,7 @@
 %-----------------------------------------------------------------------------------------------------------
 \documentclass[a4paper,11pt,onecolumn]{report}
 
+
 %-----------------------------------------------------------------------------------------------------------
 % The \usepackage{package_name} commands imports external packages (here: graphicx)
 % to provide latex with external features.
@@ -40,9 +41,47 @@
 \usepackage{graphicx}
 \graphicspath{{images}}
 
-\usepackage{array} % to use
+\usepackage{array} % to use m and b flags for the table columns
+% package needed for tabularx enviornment
+\usepackage{tabularx}
+% package needed for \mutlirow command
+\usepackage{multirow}
+\usepackage{longtable}
+
+% package needed to apply colours to table rows
+% option table specifies that package is only applied to table environment
+\usepackage[table]{xcolor}
+
+% to define the layout of the page (such aus width, length,
+% margins, etc.) use the \usepackage{geometry} command
+% the following command creates a document with a text area
+% with 6 inches wide and 8 inches height
+%\usepackage[a4paper,total={6in,8in}]{geometry}
+
+% You can seperate the options from the geometry package by using 
+% the geometry package
+\usepackage{geometry}
+% following command creates a4paper with a textarea 6in wide and 8in height
+% \geometry{a4paper, total={6in,8in}}
+% following command creates legalpaper in portrait mode and with 2in margin 
+% \geometry{legalpaper, portrait, margin=2in}
 
 
+% layout package includes commands to visualize documents layout
+\usepackage{layout}
+
+% package lipsum includes command(s) to create dummy text
+\usepackage{lipsum}
+% package blindtext includes command(s) to create dummy text
+\usepackage{blindtext}
+
+% This command sets the thickness of the borders of the table to 0.5em
+\setlength{\arrayrulewidth}{0.25em}
+% This command sets the space between the text and the left/right border of 
+% its cell, here to 25pt also other units possible
+\setlength{\tabcolsep}{25pt}
+% \renewcommand{\arraystretch}{1.5} commands set the height of each row of a table
+\renewcommand{\arraystretch}{1.5}
 
 %-----------------------------------------------------------------------------------------------------------
 % For adding a title, author and date, latex need to include first the following three commands
@@ -303,6 +342,9 @@
     This is the first subsection of the second section.
     % \section* creates an unnumbered section
     \section*{Unnumbered section}
+    % unnumbered sections wont be added with the \tableofcontents command
+    % you have to add them manually by the following command
+    \addcontentsline{toc}{section}{Unnumbered section}
     This is an example for an unnumbered section
     % Note: The commands with (*) asterisk disable the automatic numbering
 
@@ -360,6 +402,7 @@
         % p{<width>} creates column with specified width and aligns text at top
         % b{<width>} creates column with specified width and aligns text at bottom 
         % (requires: \usepackage{array} 
+        % creates 4 columns with left centered right, and paragraph column with 4.2em width middle centered text
         \begin{tabular}{|| l | c | r | m{4.2em} ||}
             \hline  % draw a horizontal line with \hline command to create a 
             % border for the top 
@@ -378,6 +421,345 @@
         \caption{Table with borders left, right aligned and centered content}
         \label{table:intermediate_table}
     \end{table}
+
+    % for specify the width for entire table and evenly distribute the space within
+    % use tabularx environment
+    % 1. \usepackage{tabularx}
+    \begin{tabularx}{0.8\textwidth} { % uses 80% of the text width
+        % the prefix inside braces sets the alignment, i.e.
+        % firts column to right, second to center and third to left
+        | >{\raggedright\arraybackslash}X
+        | >{\centering\arraybackslash}X
+        | >{\raggedleft\arraybackslash}X |
+    }
+    \hline
+    item 11 & item 12 & item 13 \\
+    \hline
+    item 21 & item 22 & item 23 \\
+    \hline
+    \end{tabularx}
+
+
+    %-------------------------------------------------------------
+    % Multicolumn and multirow
+    %-------------------------------------------------------------
+    % the \multicolumn command allows you to merge several columns
+    % 1. \usepackage{multirow}
+    \begin{table}[h]
+        \begin{tabular}{ |p{3cm} | p{3cm} | p{3cm} | p{3cm}| }
+            \hline
+            % the \multicolumn command has 3 arguments
+            % {4} stands for the number of columns to be merged
+            % {| c |} delimiters and alignment of the colum, centered with vertical
+            % line at each side of the cell
+            % {This is a merged column} can contain any text to be displayed within
+            % the text.
+            \multicolumn{4}{|c|}{This is a merged column} \\
+            \hline 
+            content 1 & content 2 & content 3 & content 4 \\
+            content 4 & content 5 & content 6 & content 7 \\
+            \hline
+    
+        \end{tabular}
+        \caption{ table with multicolumn command}
+        \label{table:table_multicolumn}        
+    \end{table}
+
+    % to combine the rows you need to add the \multirow package
+    % \usepackage{multirow}
+    \begin{table}[h]
+        \centering
+        \begin{tabular}{|c|c|c|}
+            \hline
+            \multicolumn{3}{|c|}{multirow table} \\
+            \hline
+            % the \multirow command takes also 3 arguments
+            % {3} defines how many columns should be combined
+            % {5em} defines the width of the combined columns
+            % {multiple row} contains text to be displayed
+            \multirow{3}{5em}{multiple row} & col2 & col3 \\ 
+                                            & col4 & col5 \\
+                                            & col6 & col7 \\
+            \hline
+        \end{tabular}
+        \caption{This table is using the multirow command}
+        \label{table:table_multirow}
+    \end{table}
+
+    %---------------------------------------------------------
+    % Multipage Tables
+    %---------------------------------------------------------
+
+    % If you want to insert very long tables, which take up to one or more pages
+    % then use the \longtable command
+    % First add \usepackage{longtable} to preamble of your document
+    \begin{longtable}[c]{ | c | c | }
+        \caption{Long Table}
+        \label{table:table_long} \\
+        
+        % Defintion of the first head of the table
+        \hline
+        \multicolumn{2}{ | c | }{Begin of table} \\
+        \hline
+        Something & something else  \\
+        \hline
+        Extra & Extra2 \\
+        \hline
+        % Everything above this command will appear at the beginning of the 
+        % table on the first page
+        \endfirsthead
+
+        % Second head defintion
+        \hline
+        \multicolumn{2}{ | c | }{Continuation of the table}  \\
+        \hline
+        Something & something else \\
+        \hline
+        % Everything between this command and below \endfirshead will appear on 
+        % top of table on each page except the first one.
+        \endhead
+
+        \hline
+        last column & last column \\
+        \hline
+        % what you put before \endfoot and below \endhead will appear on the end 
+        % of each table on each page except the last page
+        \endfoot
+
+
+        \hline
+        \multicolumn{2}{ | c | }{End of Table}\\
+        \hline
+        \hline
+        % the elements before this command and \endfoot will be displayed at the 
+        % bottom of the table only on the last page.
+        \endlastfoot
+
+        % Content of the long table
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+        Lots of lines & like this\\
+    \end{longtable}
+
+    %-----------------------------------
+    % Table positioning
+    %-----------------------------------
+    % you can position the table by wraping the tabularx environment
+    % in the table enviromnent, like in the following illustration,
+    % you can use the following parameters
+    % h will place the table here approximately (dt. etwa, ungefähr)
+    % t will place the table at the top of the page
+    % b will place the table at the bottom of the page
+    % p will place the table in a special page. for tables only
+    % ! overrides internal latex parameter
+    % H places the table at this precise location, like h!
+    % h! places the table at this precise location
+    % \centering centers the table
+    % \[1ex] adds extra space for table
+    \begin{table}[]
+        \begin{tabular}{ | c | c | c | }
+            \hline
+                col1 & col2 & col3 \\
+                col4 & col5 & col6 \\
+            \hline
+        \end{tabular}
+    \end{table}
+
+    % \listoftables commands adds list of tables with all labeled tables to document
+    % it will use the caption of the tables to create the list
+    \listoftables
+
+    %---------------------------------------------------------
+    %   Change appearance of a table
+    %---------------------------------------------------------
+    % \setlength{\arrayrulewidth}{length} sets the thickness of the borders of the tables
+    % \setlength{\tabcolsep}{length} sets the space between the text and left/right border of its cell
+    % \renewcommand{\arraystretch}{1.5} sets the height of each row, here 1.5
+
+    % coloring your cell
+    % you can apply colours to the rows of your table by using the xcolor
+    % package
+
+    % \rowcolors take 3 arguments
+    % {2} specifies the row to start
+    % {green!80!yello!50} specifies the color for odd rows
+    % {green!80!yellow!40} specifies the color for even rows
+    {\rowcolors{2}{green!80!yellow!50}{green!80!yellow!40}
+    \centering
+    \begin{tabular}{|c|c|}
+        \hline
+        \multicolumn{2}{|c|}{Table with color} \\
+        \hline
+        col1 & col2 \\
+        col3 & col4 \\
+        \hline
+    \end{tabular}
+    } %  wrap tabular environment between {\rowcolors ... } to define colors
+    % for the rows
+
+
+    % Table to test different color commands
+
+    % With \arrayrulecolor[format][DB5800] you can define the colors
+    % of the lines/borders
+    \arrayrulecolor[HTML]{DB5800}
+    % The easiest way to define color for a column is to define a new column type
+    % The \newcolumntype command defines a column s, with centered content and a color
+    % AACCDD in HTML format.
+    \newcolumntype{s}{>{\columncolor[HTML]{AACCDD}} c}
+    \begin{tabular}{ | s | c | c | c | } % the created column s is used here as argument
+        \hline
+        \rowcolor[HTML]{1903BE}
+        \multicolumn{4}{|c|}{different coloring examples} \\
+        \hline
+        col1 & col2 & col3 & 
+        % with the \cellcolor command you can add color to a cell
+        % either by entering the color name directly or, e.g. {blue}
+        % or by adding a format an specify the color according the format
+        \cellcolor{blue}col4 \\
+        col5 & col6 & col7 & 
+        \cellcolor[HTML]{DB5800}col8 \\
+        % with the \rowcolor command before a row you can change the color of the whole row
+        \rowcolor{gray}
+        \rowcolor[HTML]{00FFFF}
+        col9 & col10 & col11 & col12 \\
+        \hline
+        
+    \end{tabular}
+
+    % the \tableofcontents command is straightforward and creates a table of content
+    % NOTE: unnumbered section won't be added to your table of content
+    % you can manually add them with the \addcontentsline{toc}{section}{Unnumbered Section}
+    \tableofcontents
+
+    
+    %====================================================
+    % page-layout paramters 
+    %====================================================
+    % the \vspace{length} command defines a vertical space 
+    {
+    \vspace{15pt}
+    % following command redefines the left margin
+    \setlength{\hoffset}{0.1cm}
+    % following command redefines the 
+    \setlength{\textheight}{8cm}    % text height
+    \setlength{\topmargin}{-50pt}   % margin top
+    % Note: for more layout parameters look on:
+    % https://de.overleaf.com/learn/latex/Page_size_and_margins#Reference_guide
+    % or the output of \layout or \layout*
+
+    % \layout command draws graphic representing the document's layout
+    % \layout 
+    % \layout* redraws the graphic of the layout with the changes
+    % also shows the length of the layout parameters
+    \layout*
+    % \newpage command starts a new page
+    \newpage    
+    % draws a graphical represantion of the current layout
+    \section{Default \LaTeX{} layout}
+    \lipsum
+    \pagebreak
+    }
+    \section{Section with new dummytext}
+    % blindtext with 4 repititions and 2 paragraphs
+    \Blindtext[2][4]
+
 \end{document}
 
 
@@ -386,7 +768,7 @@
 %           https://www.overleaf.com/learn/latex/Learn_LaTeX_in_30_minutes#The_preamble_of_a_document
 %           https://en.wikibooks.org/wiki/LaTeX/Tables
 %           https://www.overleaf.com/learn/latex/Tables
-%           
+%           https://de.overleaf.com/learn/latex/Page_size_and_margins#Reference_guide
 %           
 %           
 %           
