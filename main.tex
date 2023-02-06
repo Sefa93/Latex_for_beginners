@@ -50,7 +50,38 @@
 
 % package needed to apply colours to table rows
 % option table specifies that package is only applied to table environment
-\usepackage[table]{xcolor}
+\usepackage[table,dvipsnames]{xcolor}
+
+% options to load named color with the color package 
+% \usepackage[usenames, dvipsnames]{color}
+
+% defintion of your own colors
+% The \definecolor{<defined_color_name>}{<model>}{values...} let you 
+% define your own colors. After the definition of you own colors you can
+% easily use them by the \color{<defined_color_name>} command within the document
+
+% the following command defines a color with the rgb model (red, green, blue) 
+% with comma seperated values from 0-1 for each color. 
+\definecolor{MyColor1}{rgb}{0.8,0.2,0.3}
+% the following command defines a color with the RGB model (red, green, blue)
+% with integer values from 0-255 for each color
+\definecolor{MyColor2}{RGB}{255,0,0}
+% the following command defines a color with the HTML model means with a
+% Hexadecimal code
+\definecolor{MyColor3}{HTML}{AA1202}    
+% the following command defines a color by its grey scale, i.e. the specified 
+% color a mixed with gray.
+\definecolor{MyColor4}{gray}{0.5}
+% After the definition of your colors you can easily use theme with the \color 
+% command with it's defined names, e.g. \color{MyColor1}
+
+% Alternative you can mix colors with the \colorlet command, \usepackage{xcolor} 
+% required. 
+% The following command defines a color with 70% RubineRed and 30% white
+\colorlet{MyColor6}{RubineRed!70}
+% The following command defines a color with 10% green and 90% orange
+\colorlet{MyColor5}{green!10!orange}
+
 
 % to define the layout of the page (such aus width, length,
 % margins, etc.) use the \usepackage{geometry} command
@@ -74,6 +105,37 @@
 \usepackage{lipsum}
 % package blindtext includes command(s) to create dummy text
 \usepackage{blindtext}
+
+% package hyperref to add hyper links to the document for the references etc.
+\usepackage{hyperref}
+% \hypersetup command will set up the options to configure the behaviour 
+% of the links within the document
+% https://de.overleaf.com/learn/latex/Hyperlinks#Reference_guide (for all options)
+\hypersetup{
+    % the hypersetup can have following options:
+    % colorlinks defines if links should be coloured or not
+    colorlinks=true,    
+    % linkcolor defines the color of the links
+    linkcolor=green,
+    % filecolor defines the color of links to local files
+    filecolor=yellow,
+    % urlcolor defines the color of links to websites
+    urlcolor=blue,
+    % defines the title of the pdf
+    pdftitle={Example pdf title},
+    % defines the appearance mode at the opening of the pdf with a pdf reader.
+    pdfpagemode=FullScreen,
+}
+
+% 1 import package biblatex required for bibliography
+\usepackage{biblatex}
+% 2 store your references/citations in a .bib file 
+% and import it with the \addbibresource{bibliographic resource} command 
+\addbibresource{./references/chatbot.bib}
+
+% package to use the import command
+\usepackage{import}
+
 
 % This command sets the thickness of the borders of the table to 0.5em
 \setlength{\arrayrulewidth}{0.25em}
@@ -759,7 +821,206 @@
     \section{Section with new dummytext}
     % blindtext with 4 repititions and 2 paragraphs
     \Blindtext[2][4]
+    \pagebreak
+    
+    % Linking web adress
+    % There are two ways in LaTeX to link web adresses
+    % (1) With \url{<url>} command, displays the actual url
+    % (2) With \href{<url>}{<text/sentence>} command, which display the
+    % given text/sentence instead of the actual url
+    \section{Links}
+    Link to the website of Besiktas JK: \url{https://www.bjk.com.tr}
+    Link where url is replaced with the specified text or sentence 
+    \href{http://www.bjk.com.tr}{Link of Greatest Club}
 
+    % \href{run:./path/to/local/file}{Text/Sentence} command opens a local
+    % file specified by its path.
+    This following link opens image the current squad of besiktas jk Link:
+    \href{run:./main.pdf}{main}
+
+    % You can manually link any word or sentence in your document with the
+    % \hyperlink{target name}{link text} command
+    % As well as create a target word or sentence for this command with the
+    % \hypertarget{target name}{anchor text} command
+    % The following example demonstrates how these commands work together
+    I will mark any word in these sentence as \hyperlink{example}{link } it should be colored.
+    This is a sentence between the link and the target.
+    If you clicked on the link the target is \hypertarget{example}{here}.
+    \pagebreak
+    \section{Colors}
+    % the \pagecolor{<color>} command defines the background color for a page
+    % it is a switch command, i.e. you can use the command again to switch
+    % the color
+    \pagecolor{black}
+    \color{white}
+    % Example for colored sentences, first add \usepackage{xcolor}
+    {   % wrap the sentence/word in {} to apply the defined commands between them
+        % only to this sentence/word
+        % \color command using the predefined blue color
+        \color{blue}
+        This sentence should be blue.
+        
+    }
+    {   
+        % \color[format]{color} command using a color in HTML format Here DE5900
+        \color[HTML]{DE5900}
+        This sentence should be colored in HTML format DE5900. 
+    }
+    And this sentence should be normal.
+    \\
+    \noindent   % defines that the following line has no indent
+    {
+        % \color command with RubineRed of dvipsnames option of xcolor package
+        \color{RubineRed}   
+        % \rule{\linewidth}{0.5mm} draws a horizontal line with a 0.5mmm stroke
+        \rule{\linewidth}{0.5mm}
+    }
+    {
+        % With the \colorbox{color}{text} command u can give 
+        % text a background color.
+        \colorbox{BurntOrange}{This sentence has a backgroundcolor}
+    }
+
+    {
+        \pagebreak
+        % \nopagecolor command change the background color to normal.
+        \nopagecolor
+        A new Page starts here
+    }
+    \color{black}
+    \pagebreak
+    % flushleft and flushright evironment for unjustifed left and right
+    % paragraphs
+    % center enviroment for centering the content
+    % flushleft enviornment aligns new paragraphs to left without indent or
+    % space 
+    \begin{flushleft}   
+    \section{Paragraphs and new Lines}
+    This is text contained in the first paragraph.
+    This is text contained in the first paragraph.
+    This is text contained in the first paragraph.
+    \par    % \par command defines a new paragraph
+    This is text contained in the second paragraph.
+    This is text contained in the second paragraph.
+    This is text contained in the second paragraph.
+    % the empty line below indicates a new paragraph
+
+    This is text contained in the third paragraph.
+    This is text contained in the third paragraph.
+    This is text contained in the third paragraph.        
+    \end{flushleft}
+
+    % \raggedright command is an alternative to flushleft environment
+    % \raggedleft command is an alternative to flushright enviromnent
+    % \centering command is an alternative to center new paragraphs
+    {
+    \raggedleft
+    This is text contained in the first paragraph.
+    This is text contained in the first paragraph.
+    This is text contained in the first paragraph.
+    \par    % \par command defines a new paragraph
+    This is text contained in the second paragraph.
+    This is text contained in the second paragraph.
+    This is text contained in the second paragraph.
+    % the empty line below indicates a new paragraph
+
+    This is text contained in the third paragraph.
+    This is text contained in the third paragraph.
+    This is text contained in the third paragraph.  
+    \\
+    }
+    {
+    \vspace{10pt}
+    \raggedright
+    This is text contained in the first paragraph.
+    This is text contained in the first paragraph.
+    This is text contained in the first paragraph.
+    \par    % \par command defines a new paragraph
+    This is text contained in the second paragraph.
+    This is text contained in the second paragraph.
+    This is text contained in the second paragraph.
+    % the empty line below indicates a new paragraph
+
+    This is text contained in the third paragraph.
+    This is text contained in the third paragraph.
+    This is text contained in the third paragraph.   
+    \\
+    }
+    {
+    \vspace{10pt}
+    \centering
+    This is text contained in the first paragraph.
+    This is text contained in the first paragraph.
+    This is text contained in the first paragraph.
+    \par    % \par command defines a new paragraph
+    This is text contained in the second paragraph.
+    This is text contained in the second paragraph.
+    This is text contained in the second paragraph.
+    % the empty line below indicates a new paragraph
+
+    This is text contained in the third paragraph.
+    This is text contained in the third paragraph.
+    This is text contained in the third paragraph.   
+    \\
+    }
+    {
+    \vspace{10pt}
+    % the \parindent command has the amount with which each paragraph is indented
+    % the \setlength{\parindet}{length} redefines the default value
+    \setlength{\parindent}{24pt}
+    This is text contained in the first paragraph.
+    This is text contained in the first paragraph.
+    This is text contained in the first paragraph.
+    \setlength{\parindent}{0pt} % to avoid indentation at each paragraph
+    \par    % \par command defines a new paragraph
+    This is text contained in the second paragraph.
+    This is text contained in the second paragraph.
+    This is text contained in the second paragraph.
+    % the empty line below indicates a new paragraph
+    
+    \setlength{\parindent}{24pt}
+    \noindent % avoids indentation
+    % \indent command sets an indent
+    This \indent is text contained in the third paragraph.
+    This is text contained in the third paragraph.
+    This is text contained in the third paragraph.
+    This is a sentence indented by the \verb|\indent| command   
+    \\
+    }
+
+    % Overview of all length in latex
+    % https://www.overleaf.com/learn/latex/Lengths_in_LaTeX#Lengths
+    % The \setlength{cmd}{length} can redefine the default values.
+    % width=0.25\textwidth option to set element with 25% of textwidth
+
+    The article \cite{folstad2017} found out why people use chatbots.
+    I will suggest you to read this.
+
+    % The \printbibliography command prints the bibliography
+    % It may have options like 
+    % type=article to filter articles
+    % type=books to filter books
+    % keywords={chatbots} to filter by word chatbot in any of the field of reference 
+    % title={<your_title>} Changes the default title with your specified title
+    % heading=bibintoc option will add this bibliography to table of content
+    % heading=subbibintoc option will add the bibliography as subsection
+    % to table of contents
+    \printbibliography[title={This is displayed instead of Bibliography}]
+
+    % The \input{<filename.tex>} replaces the command with the content
+    % of another .tex file
+    \input{./Latex_files/part1.tex}
+
+    % \import command takes two arguments
+    % first the directory of the file
+    % second the filename
+    \import{Latex_files/}{part2.tex}    % \import is better suited for nested imports (look in part2.tex for \subimport{relative path}{file}) command
+    
+    % Best Practice: It is a best practice to divide your large document in 
+    % single parts and import them like demonstrated in the following code
+    \import{sections/}{section1-1.tex}
+    \import{sections/}{section1-2.tex}
+    
 \end{document}
 
 
