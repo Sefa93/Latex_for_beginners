@@ -136,6 +136,26 @@
 % package to use the import command
 \usepackage{import}
 
+% You can also set the page style in Latex by using the 
+% \pagestyle{<style>} and \thispagestyle{<style>} commands
+% There are four styles for <style> argument available
+% empty: no header, no footer
+% plain: no header, footer contains centered pagenumber
+% headings: no footer, header contains centered page number and class-specific info
+% myheadings: same as headings but it contains user-specific infos instead of class-specific
+
+% usally the for the document defined report contains plain style per default
+% The \pagestyle{<style>} commands sets the style for the current and subsequent pages
+% \pagestyle{plain}
+
+% The \thispagestyle command sets style only for the current page
+% \thispagestyle{plain}
+
+% Import of fancyhdr to set up headers and footers
+\usepackage{fancyhdr}
+
+% Import of lastpage package for lastpage command
+\usepackage{lastpage}
 
 % This command sets the thickness of the borders of the table to 0.5em
 \setlength{\arrayrulewidth}{0.25em}
@@ -144,6 +164,9 @@
 \setlength{\tabcolsep}{25pt}
 % \renewcommand{\arraystretch}{1.5} commands set the height of each row of a table
 \renewcommand{\arraystretch}{1.5}
+
+% Import package amsmath for \newtheorem command
+\usepackage{amsmath}
 
 %-----------------------------------------------------------------------------------------------------------
 % For adding a title, author and date, latex need to include first the following three commands
@@ -161,6 +184,16 @@
 % The content of a document have to be added between the \begin{document} and \end{document}
 %-----------------------------------------------------------------------------------------------------------
 \begin{document}
+
+    % The \pagenumbering{<style>} command sets the style of the page number, the style 
+    % argument can on of these five:
+    % arabic (1,2,3,...)
+    % alph (a,b,c,...) 
+    % Alph (A,B,C,...)
+    % roman (i,ii,iii)
+    % Roman (I,II,III)
+    \pagenumbering{arabic}   % sets the page numbering style to uppercase Roman style
+
     % \maketitle commands adds the information defined above with title, author date commands to the document
     % have to be the first command within \begin{document} and \end{document}
     \maketitle
@@ -1020,7 +1053,180 @@
     % single parts and import them like demonstrated in the following code
     \import{sections/}{section1-1.tex}
     \import{sections/}{section1-2.tex}
+
+    % This section demonstrates LaTeX code to generate your custom
+    % header and footer
+    \section{Header and Footer}
+
+    % \headrulewidth defines the thickness of the line under the header
+    \renewcommand{\headrulewidth}{0.25mm}
+    % \footrulewidth defines the thickness of the line above the footer
+    \renewcommand{\footrulewidth}{0.15mm}
+    % \headruleskip defines the distance between header text and line
+    \renewcommand{\headruleskip}{5pt}
+    % \footruleskip defines the distance between footer text and line
+    \renewcommand{\footruleskip}{5pt}
+    % NOTE: use \renewcommand{command}{newlength} to set the length.
+    % with \setlength it doesn't work!
+
+
+    \pagestyle{fancy}   % \pagestyle{fancy} applies your own header and footer
+    \fancyhead{}    % \fancyhead{} clears default header settings
+    \fancyhead[L]{Header left}  % defines Header with Header left on the left
+    \fancyhead[R]{\thepage} % adds the Header the pagenumber on the right
+    \fancyfoot{}    % clear default footer settings
+    \fancyfoot[C]{\thepage\ of \pageref{LastPage}} % footer with pagenumber in the center
+    \blindtext[10]
+    % NOTE: For two sided papers you have to specify additionally if you want to
+    % apply the header and footer on even (E), or odd (O) pages
+    % \fancyhead[RO]{Example Content}   % Right on pages with a odd page number
+    % \fancyhead[RE]{Example Content}   % Right on pages with a even page number
+
+    % Line breaks and blank spaces
+    \clearpage  % creates new page
+    \section{This is a new Page clearpage}
+    \newpage    % creates also a new page figures tables fit text flow
+    \section{This is a new Page newpage}
+    % The \\ , \newline and \hfill break commands create a new line
+    Here goes some text and with start a new line \\
+    New line created with newline command \newline
+    New line with hfill and break \hfill \break
+
+    % horizontal space with \hspace{<length>} and \hfill
+    Here comes a space of 1cm \hspace{1cm} then this.\\
+    Begin \hfill End    % hfill creates a space that stretch over the available space
+
+    % Counter in LaTeX
+    % \newcounter{mycounter} defines a new counter mycounter, which can be 
+    % used with \themycounter inside the document and initializes it with 0.
+    \newcounter{mycounter}
+    % The \setcounter{counter}{value} sets counter to the specified value.
+    \setcounter{mycounter}{55}
+
+    The new defined counter has the value of \themycounter.
+
+    % \addtocounter{counter}{value} incrememnts counter by specified value
+    \addtocounter{mycounter}{-3}
+    After using \verb|\addtocounter{mycounter}{-3}| the new value 
+    of mycounter should be 52, and it is \themycounter
+
+    % \stepcounter{counter} increments counter by 1.
+    \stepcounter{mycounter}
+    After using \verb|\stepcounter{mycounter}| the new value 
+    of mycounter should be 53, and it is \themycounter
     
+    \newcounter{b}
+    \setcounter{b}{55}
+    % \value{counter} is used in commands to access counter as LaTeX number.
+    % dont used it to print the number of the counter, because it leads to an error.
+    \addtocounter{mycounter}{\value{b}}
+    The value of \verb|\mycounter| = \themycounter\ should be 108.
+
+    % The \newcommand{cmd}{def} command creates a new command in LaTeX
+    % It takes two arguments
+    % 1. The name of the command (cmd)
+    % 2. What the command should do. {def}
+    \newcommand{\mycommand}{\textit{mycommand executed}}
+    % The defined mycommand prnt mycommand executed in italic.
+    \mycommand
+
+    % The \newcommand{cmd}[number_arg]{def} defines a new LaTeX command
+    % with command name (cmd), number of arguments it should take (number_arg)
+    % and what the command should do {def}
+    % This command prints your argument
+    \newcommand{\mycommandprintarg}[1]{
+        % With #1 you can access your first parameter
+        The command specfied in your arg is #1
+    }
+    \mycommandprintarg{Hello}
+
+
+    % \newcommand with optional parameters
+    % \newcommand*{cmd}[args][default_arg]{def}
+    % [default_arg] default_arg makes the first argument optional and
+    % it defines a default argument for the first argument if it is omitted.
+    \newcommand{\printargs}[2][This is the default arg]{
+        Arg1 #1\\
+        Arg2 #2\\
+    }
+
+    \printargs{This is the second arg}
+
+    % to overwrite existing commands use the \renewcommand{cmd}{def}
+    % 1. Argument is the command name (cmd)
+    % 2. Argument defines what the renewed command should does.
+
+    % You can define your own environment by using the
+    % \newenvironment{nam}[args][default]{begdef}{enddef} command
+    % nam = User-defined name of the environment
+    % args = number of args of the environment
+    % default = makes first argument optional and provides default value for it,
+    % if it is ommited 
+    % begdef = LateX Code executed when environment starts, also after \begin{nam}
+    % begdef allows your access to argument with, e.g. #1 for frst argument, #2 for second etc.
+    % enddef = Latex Code executed when enviornment ends, also after \end{nam}
+    % enddef DOSN'T Allow your to use args inisde
+    % the followng command defnes my own text box with 2 paramters, frst is optional
+    % and replaces by This is the default value if ommited
+    \newenvironment{mytextbox}[2][This is the default value]
+    {   
+        % begdef part
+        \begin{center}                          % centers
+        Argument 1 = (\#1)=#1\\                 % prints first argument
+        \begin{tabular}{|p{0.9\textwidth}|}     % defines tabular
+            \hline\\                            % hline and line break with \\
+        Arguemtn 2 = (\#2)=#2\\                 % print second argument
+    }
+    {
+            \\\\\hline                          % \\ \\ two line breaks & hline
+        \end{tabular}                           % end tabular
+        \end{center}                            % end center
+    }
+
+    {   
+        \arrayrulecolor{black}
+        \setlength{\arrayrulewidth}{0.2mm}
+        \begin{mytextbox}{This is second argument}
+            Text inside mytextbox environment
+        \end{mytextbox}
+    }
+    \begin{mytextbox}{This is second argument 2}
+        Text inside mytextbox environment 2
+    \end{mytextbox}
+    % NOTE: If u don't need arguments for your environment use 
+    % \newenvironment{name}{begdef}{enddef} command
+
+    % \newcounter{counter}[anothercounter] defines a counter which is reseted
+    % when another counter is stepped (increment by one).
+    \newcounter{foo}[section]
+    \refstepcounter{foo}    % refstepcounter{counter} increments counter by one
+    \refstepcounter{foo}
+    \thefoo \\  % should be 2        
+    \refstepcounter{foo}
+    \thefoo \\  % should be 3
+    \section{new}   % new section resets foo counter
+    \thefoo         % 0
+    \refstepcounter{foo}     
+    \refstepcounter{foo}
+    \thefoo % should be 2
+
+    % The \newtheorem{envname}{caption}[within] command defines a new numbered
+    % enviornment and takes 3 arguments
+    % 1. The name of the environment (envname)
+    % 2. The caption to be printed in bold before the number (caption)
+    % 3. optional paramter which resets the value of the numbered enviornment
+    % if it was used. The counter of numbered enviornment will preceed by the
+    % counter of the optional paramter.
+    \newtheorem{SampleEnv}{Sample Enviornment}[section] % omit [section] to see the difference
+
+    \begin{SampleEnv}
+        Sample Env 1
+    \end{SampleEnv}
+    \begin{SampleEnv}
+        Sample Env 1
+    \end{SampleEnv}
+    
+
 \end{document}
 
 
